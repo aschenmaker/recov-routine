@@ -1,5 +1,7 @@
 # Recov Goroutines 
 
+[![codecov](https://codecov.io/gh/aschenmaker/recov-routine/branch/main/graph/badge.svg?token=4ETRHSOL63)](https://codecov.io/gh/aschenmaker/recov-routine)
+
 ## about
 
 This repo is a learning purposed examples to captured goroutine panic.
