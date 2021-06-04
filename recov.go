@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"runtime/debug"
+	"sync"
 	"time"
 )
 
@@ -19,6 +20,7 @@ type WorkerFunc func()
 
 // RecovRoutine defines the recover.
 type RecovRoutine struct {
+	m sync.Mutex
 	error
 	// RetryCnts defines the times to retry the workerfunc
 	//
@@ -46,7 +48,9 @@ func (r *RecovRoutine) Recover() {
 		if r.PCallback != nil {
 			r.PCallback(r)
 		}
-
+		// add lock to RetryCnt write.
+		r.m.Lock()
+		defer r.m.Unlock()
 		if r.RetryCnt > 0 {
 			logger.Printf("[Recov retry]retry %v times:\n", r.RetryCnt)
 			r.RetryCnt--
